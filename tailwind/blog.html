@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Section Example</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.7.2/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+    <style>
+         .nav-gradient {
+            color: white; 
+            border: none;
+            padding: 8px 12px; 
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease; 
+        }
+        
+        .nav-gradient-active{
+            background: linear-gradient(81.02deg, rgb(54, 26, 51) -23.47%, rgb(177, 75, 244) 45.52%, rgb(244, 143, 177) 114.8%);
+            border: none; 
+            padding: 8px 12px; 
+            border-radius: 5px;
+        }
+
+        .nav-gradient:hover {
+           background: linear-gradient(81.02deg, rgb(250, 85, 96) -23.47%, rgb(177, 75, 244) 45.52%, rgb(77, 145, 255) 114.8%);
+            transform: scale(1.05); 
+        }
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 50;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal h2{
+        text-shadow: 0 0 1px #ffffff;
+}
+.modal-content {
+    background-color: #1d2427;
+    padding: 50px 80px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 80%; /* Adjusted width */
+    max-width: 700px; /* Maximum width */
+        
+}
+        
+
+        
+ 
+        .btn-gradient {
+            background: linear-gradient(81.02deg, rgb(54, 26, 51) -23.47%, rgb(177, 75, 244) 45.52%, rgb(244, 143, 177) 114.8%);
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 9999px; 
+            text-align: center; 
+            text-decoration: none;
+            display: inline-block; 
+            transition: background 0.3s ease, transform 0.3s ease; 
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(81.02deg, rgb(250, 85, 96) -23.47%, rgb(177, 75, 244) 45.52%, rgb(77, 145, 255) 114.8%);
+            transform: scale(1.05); 
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s, color 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #1e3a8a, #7e22ce);
+            color: #fff; 
+        }
+        .card img {
+            transition: transform 0.3s;
+        }
+        .card:hover img {
+            transform: scale(1.05);
+        }
+        .card p {
+            transition: color 0.3s;
+        }
+        .card:hover p {
+            color: #fff; 
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+ <!-- Navigation Bar -->
+ <nav class="bg-gray-800 text-white p-4" id="Navbar">
+    <div class="container mx-auto flex justify-between items-center" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">
+        <!-- Logo or Brand Name -->
+        <span class="font-semibold text-xl">Steam Games 2024</span>
+        <!-- Centered Navigation Links -->
+        <div class="flex-1 flex justify-center space-x-4">
+            <a href="index.html" class="text-white bg-transparent">
+                <button class="bg-transparent nav-gradient border-none">Home</button>
+            </a>
+            <a href="blog.html" class="text-white bg-transparent">
+                <button class="bg-transparent nav-gradient nav-gradient-active border-none">Blogs</button>
+            </a>
+        </div>
+           <!-- Register Link -->
+           <div class="space-x-4">
+            <a href="#" class="text-white bg-transparent">
+                <button id="loginButton" class="bg-transparent border-none nav-gradient">Login</button>
+            </a>
+            <a href="#" class="text-white bg-transparent ">
+                <button id="registerButton" class="bg-transparent border-none nav-gradient">Register Now</button>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+   <!-- Login Modal -->
+    <div id="loginModal" class="modal flex">
+        <div class="modal-content w-full max-w-md">
+            <h2 class="text-3xl font-bold mb-4" style="font-family: 'Montserrat', sans-serif;">Login</h2>
+            <form>
+                <div class="mb-4">
+                    <label class="block text-gray-400 text-sm mb-2" for="loginUsername" style="font-family: 'Montserrat', sans-serif;">Username</label>
+                    <input class="w-full p-3 text-gray-900 rounded-lg shadow-md focus:outline-none" id="loginUsername" type="text" placeholder="Enter your username">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-400 text-sm mb-2" for="loginPassword" style="font-family: 'Montserrat', sans-serif;">Password</label>
+                    <input class="w-full p-3 text-gray-900 rounded-lg shadow-md focus:outline-none" id="loginPassword" type="password" placeholder="Enter your password">
+                </div>
+                <button class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-lg shadow-md hover:from-pink-500 hover:to-purple-500 transition-all duration-300" style="font-family: 'Montserrat', sans-serif;">Login</button>
+            </form>
+            <div class="text-center mt-6">
+                <button id="closeLoginModal" class="text-gray-400 hover:text-white transition-all duration-300" style="font-family: 'Montserrat', sans-serif;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registerModal" class="modal flex">
+        <div class="modal-content w-full max-w-md">
+            <h2 class="text-3xl font-bold mb-4" style="font-family: 'Montserrat', sans-serif;">Register</h2>
+            <form>
+                <div class="mb-4">
+                    <label class="block text-gray-400 text-sm mb-2" for="registerUsername" style="font-family: 'Montserrat', sans-serif;">Username</label>
+                    <input class="w-full p-3 text-gray-900 rounded-lg shadow-md focus:outline-none" id="registerUsername" type="text" placeholder="Enter your username">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-400 text-sm mb-2" for="registerEmail" style="font-family: 'Montserrat', sans-serif;">Email</label>
+                    <input class="w-full p-3 text-gray-900 rounded-lg shadow-md focus:outline-none" id="registerEmail" type="email" placeholder="Enter your email">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-400 text-sm mb-2" for="registerPassword" style="font-family: 'Montserrat', sans-serif;">Password</label>
+                    <input class="w-full p-3 text-gray-900 rounded-lg shadow-md focus:outline-none" id="registerPassword" type="password" placeholder="Enter your password">
+                </div>
+                <button class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-lg shadow-md hover:from-pink-500 hover:to-purple-500 transition-all duration-300" style="font-family: 'Montserrat', sans-serif;">Register</button>
+            </form>
+            <div class="text-center mt-6">
+                <button id="closeRegisterModal" class="text-gray-400 hover:text-white transition-all duration-300" style="font-family: 'Montserrat', sans-serif;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-between">
+                <!-- Left Column (Image) -->
+                <div class="w-full md:w-1/2 mb-8 md:mb-0">
+                    <img src="image/star.jpg" alt="Latest Game Image" class="rounded-lg shadow-md">
+                </div>
+                <!-- Right Column (Content) -->
+                <div class="w-full md:w-1/2 md:pl-8">
+                    <h2 class="text-3xl font-bold mb-4 text-white" style="font-family: 'Montserrat', sans-serif;">The Latest Steam Game: <span class="text-teal-400">"Starfield"</span></h2>
+                    <p class="text-lg mb-4 text-white" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Published on <span class="font-bold">July 23, 2024</span> by <span class="font-bold">Steam</span></p>
+                    <p class="text-gray-300 leading-relaxed mb-6" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">
+                        "Starfield" is the newest RPG from Bethesda Game Studios, featuring an expansive universe for exploration and deep narrative elements. Players can embark on epic space adventures, build their own ships, and uncover hidden mysteries across the galaxy.
+                    </p>
+                    <a href="https://store.steampowered.com/app/1716740/Starfield/" class="btn-gradient" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Cards Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <!-- Heading -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-white" style="font-family: 'Montserrat', sans-serif;">UPCOMING GAMES</h2>
+                <p class="text-lg text-gray-400 mt-2" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Discover the latest and most exciting games coming soon!</p>
+            </div>
+            <div class="flex flex-wrap gap-8 justify-center" style="font-family: 'Montserrat', sans-serif;">
+                <!-- Card 1 -->
+                <div class="card w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg overflow-hidden shadow-lg" style="background: linear-gradient(to bottom right, rgb(103, 50, 99), rgba(73, 46, 96, 0.8));">
+                    <img src="image/odys.jpg" alt="Card Image" class="w-full h-48 object-cover shadow-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-white">Eternal Odyssey</h3>
+                        <p class="text-gray-300">Join an epic journey through a mystical land filled with adventure and peril. Eternal Odyssey offers a rich story and expansive open-world exploration.</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="card w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg overflow-hidden shadow-lg" style="background: linear-gradient(to bottom right, rgb(103, 50, 99), rgba(73, 46, 96, 0.8));">
+                    <img src="image/Cyber-Combat.jpg" alt="Card Image" class="w-full h-48 object-cover shadow-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-white">Cyber Combat</h3>
+                        <p class="text-gray-300">Experience the future of combat in a neon-drenched cyberpunk city. Cyber Combat blends intense action with deep customization options for a thrilling gameplay experience.</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="card w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg overflow-hidden shadow-lg" style="background: linear-gradient(to bottom right, rgb(103, 50, 99), rgba(73, 46, 96, 0.8));">
+                    <img src="image/bacroom.webp" alt="Card Image" class="w-full h-48 object-cover shadow-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-white">Realm of Shadows</h3>
+                        <p class="text-gray-300">Immerse yourself in a dark fantasy world where every choice matters. Realm of Shadows features gripping narrative elements and challenging tactical combat.</p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="card w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 rounded-lg overflow-hidden shadow-lg" style="background: linear-gradient(to bottom right, rgb(103, 50, 99), rgba(73, 46, 96, 0.8));">
+                    <img src="image/gal.jpg" alt="Card Image" class="w-full h-48 object-cover shadow-lg">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-white">Galactic Frontier</h3>
+                        <p class="text-gray-300">Explore the depths of space in Galactic Frontier. This sci-fi epic combines exploration, strategy, and real-time combat in a universe teeming with mysteries and challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Community Section -->
+    <section class="py-16  bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="container mx-auto px-4" >
+            <!-- Part 1: Title and Text Left, Image Right -->
+            <div class="flex flex-wrap items-center my-12">
+                <div class="w-full md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-3xl font-bold mb-4 text-white" style="font-family: 'Montserrat', sans-serif;">Community</h2>
+                    <p class="text-lg text-gray-300 mb-6" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet, diam eu interdum dignissim, ex ipsum consectetur lacus, vel fermentum sem orci et libero. Morbi dictum, turpis ut tempor feugiat.
+                    </p>
+                    <a href="#" class="btn-gradient" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Learn More</a>
+                </div>
+                <div class="w-full md:w-1/2 mb-8 md:mb-0 flex justify-center">
+                    <img src="image/globe1.png" alt="Example Image" class="h-auto transition-transform duration-300 transform hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Part 2: Image Left, Title and Text Right -->
+            <div class="flex flex-wrap items-center my-12">
+                <div class="w-full md:w-1/2 flex justify-center mb-8 md:mb-0">
+                    <img src="image/game.png!bw700" alt="Example Image" class="h-auto transition-transform duration-300 transform hover:scale-105">
+                </div>
+                <div class="w-full md:w-1/2 md:pl-8">
+                    <h2 class="text-3xl font-bold mb-4 text-white" style="font-family: 'Montserrat', sans-serif;">Experience</h2>
+                    <p class="text-lg text-gray-300 mb-6" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet, diam eu interdum dignissim, ex ipsum consectetur lacus, vel fermentum sem orci et libero. Morbi dictum, turpis ut tempor feugiat.
+                    </p>
+                    <a href="#" class="btn-gradient" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Discover More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-6" style="font-family: 'Montserrat', sans-serif; font-weight: 400;">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Logo/Title -->
+                <div class="flex flex-col items-center">
+                    <img src="image/logo.png" alt="Logo" class="w-24 h-24 mb-4 rounded-full border border-gray-600 shadow-lg"> <!-- Adjust size and style as needed -->
+                    <span class="text-3xl font-bold text-center">Steam Games</span>
+                    <p class="text-gray-400 mt-2 text-center">Your ultimate gaming destination</p>
+                </div>
+                <!-- Sitemap Links -->
+                <div class="flex flex-col items-start max-w-xs pl-12">
+                    <h3 class="text-xl font-semibold mb-4">Site Map</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-gray-400 transition-colors">Home</a></li>
+                        <li><a href="blog.html" class="hover:text-gray-400 transition-colors">Blogs</a></li>
+                        <li><a href="index.html" class="hover:text-gray-400 transition-colors">About Us</a></li>
+                        <li><a href="index.html" class="hover:text-gray-400 transition-colors">Store</a></li>
+                    </ul>
+                </div>
+                <!-- Login & Register Links -->
+                <div class="flex flex-col items-start max-w-xs pl-12">
+                    <h3 class="text-xl font-semibold mb-4">Account</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#Navbar" class="hover:text-gray-400 transition-colors">Login</a></li>
+                        <li><a href="#Navbar" class="hover:text-gray-400 transition-colors">Register</a></li>
+                    </ul>
+                </div>
+                <!-- QR Code for Promos -->
+                <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-semibold mb-4">Promos</h3>
+                    <img src="image/qr.jpg" alt="QR Code" class="w-32 h-32 rounded-lg shadow-lg">
+                    <p class="text-gray-400 mt-2 text-center">Scan for exclusive promotions and updates!</p>
+                </div>
+            </div>
+            <div class="text-center text-gray-400 mt-4">
+                <p>&copy; 2024 Steam Games. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Modal functionality
+  const loginButton = document.getElementById('loginButton');
+  const registerButton = document.getElementById('registerButton');
+  const loginModal = document.getElementById('loginModal');
+  const registerModal = document.getElementById('registerModal');
+  const closeLoginModal = document.getElementById('closeLoginModal');
+  const closeRegisterModal = document.getElementById('closeRegisterModal');
+
+  loginButton.addEventListener('click', () => {
+      loginModal.style.display = 'flex';
+  });
+
+  registerButton.addEventListener('click', () => {
+      registerModal.style.display = 'flex';
+  });
+
+  closeLoginModal.addEventListener('click', () => {
+      loginModal.style.display = 'none';
+  });
+
+  closeRegisterModal.addEventListener('click', () => {
+      registerModal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (event) => {
+      if (event.target === loginModal) {
+          loginModal.style.display = 'none';
+      }
+      if (event.target === registerModal) {
+          registerModal.style.display = 'none';
+      }
+  });
+    </script>
+
+</body>
+</html>
+
+
